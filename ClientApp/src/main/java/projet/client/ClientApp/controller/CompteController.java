@@ -55,5 +55,23 @@ public class CompteController {
         compteService.deleteCompte(numCompte);
     }
 
+    // FAIRE UN VIREMENT
+    @PutMapping("/comptes/virement/{numCompte}")
+    public Compte Virememt(@PathVariable("numCompte") String numCompte, @Validated @RequestBody Compte compte){
+        return compteService.FaireVirement(compte,numCompte);
+    }
+
+    //FAIRE UNE RETRAIT
+    @PutMapping("/comptes/retrait/{numCompte}")
+    public Compte Faireretrait(@PathVariable("numCompte") String numCompte, @Validated @RequestBody Compte compte) {
+        return  compteService.Faireretrait(numCompte, compte);
+    }
+
+    //c.	Faire un virement d’un compte à un autre
+    @PutMapping("/comptes/transfer/{numCompte}")
+    public Compte TransferArgent(@PathVariable("numCompte") String numCompte, @Validated @RequestBody Compte compte) {
+        return  compteService.Transfer(numCompte, compte);
+    }
+
 
 }

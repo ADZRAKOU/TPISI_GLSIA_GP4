@@ -57,4 +57,48 @@ public class CompteService {
     }
 
 
+    // a.	Faire un versement sur son compte ;
+    public Compte FaireVirement(Compte compte, String numCompte){
+        Compte cpt = compteRepository.findById(numCompte).get();
+        if (compte.getSolde() <= 0){
+            throw new RuntimeException("Montant entré est inférieur à zéro(0)");
+        }else{
+            double montant = cpt.getSolde() + compte.getSolde();
+            cpt.setSolde(montant);
+            return compteRepository.save(cpt);
+        }
+    }
+
+    //b.	Faire un retrait sur son compte si le solde le permet ;
+    public Compte Faireretrait(String numCompte, Compte compte) {
+
+        try {
+            Compte cpt = compteRepository.findById(numCompte).get();
+            double montant = cpt.getSolde() - compte.getSolde();
+            if(montant <= 0){
+                throw new RuntimeException("Montant entré est inférieur à zéro(0)");
+            } else{
+                cpt.setSolde(montant);
+                return  compteRepository.save(cpt);
+            }
+        }catch (NullPointerException e){
+            throw e;
+        }
+    }
+
+    //c.	Faire un virement d’un compte à un autre
+    public Compte Transfer(String numCptP, Compte compte){
+        Compte cpt1 = compteRepository.findById(numCptP).get();
+        double montant = cpt1.getSolde() - compte.getSolde();
+        if(montant <= 0){
+            throw new RuntimeException("Montant entré est inférieur à zéro(0)");
+        } else{
+            Compte cpt2 = compteRepository.findById(compte.getNumCompte()).get();
+            double argent = cpt2.getSolde() + compte.getSolde();
+            cpt1.setSolde(montant);
+            cpt2.setSolde(argent);
+            compteRepository.save(cpt1);
+            return  compteRepository.save(cpt2);
+        }
+    }
 }
