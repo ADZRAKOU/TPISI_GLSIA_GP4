@@ -12,9 +12,13 @@ enum TypeCompte {
 
 @Entity
 public class Compte {
+    /*
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
+
+     */
+    @Id
     private String numCompte;
     private TypeCompte typeCompte;
     private LocalDate dateCreation;
@@ -33,6 +37,7 @@ public class Compte {
         this.proprietere = proprietere;
     }
 
+    /*
     public Long getId() {
         return id;
     }
@@ -40,8 +45,7 @@ public class Compte {
     public void setId(Long id) {
         this.id = id;
     }
-
-
+     */
 
     public String getNumCompte() {
         return numCompte;
